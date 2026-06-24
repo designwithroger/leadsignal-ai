@@ -18,7 +18,7 @@ export const dictionary = {
     common: {
       language: "Language",
       english: "English",
-      spanish: "Español",
+      spanish: "Espa\u00f1ol",
       credits: "credits",
       loading: "Working...",
       tryAgain: "Try again",
@@ -37,70 +37,91 @@ export const dictionary = {
     },
     landing: {
       badge: "Built for agencies, freelancers, SEO consultants, and web designers",
-      headline: "Turn local business gaps into qualified outreach",
+      headline: "Find local businesses ready for your marketing offer",
       subhead:
-        "Find local businesses with visible marketing gaps, prioritize the best opportunities, and generate personalized openers before your competitors do.",
+        "Search by niche and city, detect marketing gaps, score each opportunity, and generate personalized outreach openers in one focused workflow.",
       createAccount: "Start free with 25 credits",
       viewSampleLeads: "View sample leads",
       openDashboard: "Open dashboard",
-      imageAlt: "Team reviewing local business opportunities",
-      statScore: "Opportunity score",
-      statScoreNote: "Missing form, no schema, weak CTA",
-      statOffer: "Recommended offer",
-      statOfferNote: "Clear reason to contact",
-      statOpeners: "Openers generated",
-      statOpenersNote: "Ready for email or LinkedIn",
-      features: [
-        ["Places search", "Find businesses by niche, city, country, and quantity."],
-        ["Signal analysis", "Detect HTTPS, metadata, forms, social links, analytics, pixels, and schema."],
-        ["Personalized openers", "Generate concise reasons to contact and outreach starters."]
+      searchExampleTitle: "Sample search",
+      searchExampleSubtitle: "Dental clinics in Miami scored for a website redesign offer.",
+      livePreview: "Demo",
+      sampleEyebrow: "Visible sample before signup",
+      searchExample: [
+        ["Niche", "Dental clinics"],
+        ["City", "Miami"],
+        ["Offer", "Website redesign"],
+        ["Tone", "Professional"]
       ],
-      sampleTitle: "Sample local lead report",
-      sampleSubtitle: "See the kind of opportunities LeadSignal AI surfaces before you create an account.",
+      sampleTitle: "Sample demo results",
+      sampleSubtitle: "A quick look at the kind of local-business opportunities LeadSignal AI helps your team prioritize.",
       sampleLeads: [
         {
-          name: "Oak & Ivy Dental",
-          niche: "Dentist in Austin",
-          score: "86",
-          signals: "No schema, weak CTA, no lead form",
-          offer: "Website conversion audit",
+          name: "Bright Dental Studio",
+          score: "84",
+          signals: ["Missing booking", "Weak CTA", "No Meta Pixel"],
+          offer: "Conversion audit",
           opener:
-            "I noticed your practice ranks locally, but the website makes it harder than it should for new patients to request an appointment."
+            "I noticed Bright Dental Studio has room to make appointment requests clearer, especially with booking and call-to-action signals."
         },
         {
-          name: "River City Med Spa",
-          niche: "Med spa in Tampa",
-          score: "78",
-          signals: "Meta description missing, no Meta Pixel",
-          offer: "Landing page + retargeting setup",
+          name: "Coral Smile Clinic",
+          score: "76",
+          signals: ["Slow site", "No schema", "Unclear service pages"],
+          offer: "SEO + website refresh",
           opener:
-            "Your services look premium, and I spotted a few quick fixes that could turn more treatment-page visitors into consultations."
+            "Coral Smile Clinic already has a strong local category, and the site could be easier for patients and search engines to understand."
         },
         {
-          name: "Summit Roof Repair",
-          niche: "Roofer in Denver",
-          score: "72",
-          signals: "No HTTPS redirect, no analytics, limited social links",
-          offer: "Local SEO and tracking cleanup",
+          name: "Miami Family Dental",
+          score: "68",
+          signals: ["Few reviews", "No form", "Weak mobile layout"],
+          offer: "Local SEO audit",
           opener:
-            "I found your company while checking roof repair searches in Denver and saw a few tracking gaps that may be hiding good leads."
+            "I saw a few signals that may be limiting new patient inquiries for Miami Family Dental, especially reviews, forms, and mobile clarity."
         }
       ],
+      copyButton: "Copy",
+      copiedButton: "Copied",
       howTitle: "How it works",
-      howSubtitle: "A simple workflow for turning local search data into useful outreach.",
+      howSubtitle: "Four practical steps from local search to useful outreach.",
       steps: [
         ["Search", "Enter a niche, city, country, quantity, offer type, language, and tone."],
         ["Analyze", "LeadSignal checks websites for technical, conversion, social, and tracking signals."],
         ["Prioritize", "Each business gets a deterministic opportunity score so you can focus first."],
-        ["Contact", "Get a summary, recommended offer, reason to contact, and personalized openers."]
+        ["Contact", "Use a summary, recommended offer, reason to contact, and personalized opener."]
+      ],
+      signalsTitle: "Signals detected",
+      signalsSubtitle: "The MVP focuses on visible website and marketing signals that agencies can explain clearly.",
+      signalsDetected: [
+        "HTTPS",
+        "Page title",
+        "Meta description",
+        "H1",
+        "CTA words",
+        "Contact form",
+        "WhatsApp link",
+        "Social links",
+        "Google Analytics",
+        "Meta Pixel",
+        "Schema.org / JSON-LD",
+        "Booking links"
       ],
       whoTitle: "Who it is for",
-      whoSubtitle: "Designed for people selling practical marketing and web improvements to local businesses.",
+      whoSubtitle: "Built for teams and solo operators selling practical marketing improvements to local businesses.",
       audiences: [
         ["Agencies", "Build prospect lists for SEO, ads, websites, and automation offers."],
         ["Freelancers", "Find warmer leads without spending hours manually auditing websites."],
         ["SEO consultants", "Spot businesses with missing metadata, schema, analytics, or weak calls to action."],
         ["Web designers", "Pitch redesigns with specific, evidence-based website gaps."]
+      ],
+      benefitsTitle: "Why teams use it",
+      benefitsSubtitle: "LeadSignal AI keeps prospecting focused on evidence instead of guesswork.",
+      benefits: [
+        ["Clearer outreach angles", "Every opener is tied to detected signals, so the message feels specific and useful."],
+        ["Less manual research", "Search, website checks, scoring, and opener generation live in one workflow."],
+        ["Better prioritization", "Sort by opportunity score and start with leads most likely to need your offer."],
+        ["Export-ready lists", "Move scored leads into your existing sales process with CSV export."]
       ],
       pricingTitle: "Credits preview",
       pricingSubtitle: "Simple usage-based architecture today, ready for paid plans later.",
@@ -110,7 +131,11 @@ export const dictionary = {
         "CSV export included",
         "Stripe-ready schema, payments not enabled yet"
       ],
-      pricingNote: "Payments are intentionally not implemented in this MVP."
+      pricingNote: "Payments are intentionally not implemented in this MVP.",
+      finalEyebrow: "Ready when your next niche is",
+      finalCtaTitle: "Find the local businesses worth contacting first",
+      finalCtaSubtitle:
+        "Start with 25 credits, test one city and niche, and see which businesses have clear marketing gaps."
     },
     auth: {
       loginTitle: "Sign in",
@@ -254,7 +279,7 @@ export const dictionary = {
     common: {
       language: "Idioma",
       english: "English",
-      spanish: "Español",
+      spanish: "Espa\u00f1ol",
       credits: "créditos",
       loading: "Procesando...",
       tryAgain: "Intentar de nuevo",
@@ -272,78 +297,106 @@ export const dictionary = {
       signOut: "Cerrar sesión"
     },
     landing: {
-      badge: "Creado para agencias, freelancers, consultores SEO y diseñadores web",
-      headline: "Convierte brechas de negocios locales en outreach calificado",
+      badge: "Creado para agencias, freelancers, consultores SEO y dise\u00f1adores web",
+      headline: "Encuentra negocios locales listos para tu oferta de marketing",
       subhead:
-        "Encuentra negocios locales con brechas visibles de marketing, prioriza las mejores oportunidades y genera aperturas personalizadas antes que tu competencia.",
-      createAccount: "Empieza gratis con 25 créditos",
+        "Busca por nicho y ciudad, detecta brechas de marketing, punt\u00faa cada oportunidad y genera aperturas de contacto personalizadas en un flujo enfocado.",
+      createAccount: "Empieza gratis con 25 cr\u00e9ditos",
       viewSampleLeads: "Ver leads de ejemplo",
       openDashboard: "Abrir panel",
-      imageAlt: "Equipo revisando oportunidades de negocios locales",
-      statScore: "Puntaje de oportunidad",
-      statScoreNote: "Sin formulario, sin schema, CTA débil",
-      statOffer: "Oferta recomendada",
-      statOfferNote: "Razón clara para contactar",
-      statOpeners: "Aperturas generadas",
-      statOpenersNote: "Listas para email o LinkedIn",
-      features: [
-        ["Búsqueda en Places", "Encuentra negocios por nicho, ciudad, país y cantidad."],
-        ["Análisis de señales", "Detecta HTTPS, metadatos, formularios, redes, analítica, píxeles y schema."],
-        ["Aperturas personalizadas", "Genera razones de contacto y primeras líneas concisas."]
+      searchExampleTitle: "B\u00fasqueda de ejemplo",
+      searchExampleSubtitle: "Cl\u00ednicas dentales en Miami puntuadas para una oferta de redise\u00f1o web.",
+      livePreview: "Demo",
+      sampleEyebrow: "Muestra visible antes de registrarte",
+      searchExample: [
+        ["Nicho", "Cl\u00ednicas dentales"],
+        ["Ciudad", "Miami"],
+        ["Oferta", "Redise\u00f1o web"],
+        ["Tono", "Profesional"]
       ],
-      sampleTitle: "Reporte de leads locales de ejemplo",
-      sampleSubtitle: "Mira el tipo de oportunidades que LeadSignal AI encuentra antes de crear una cuenta.",
+      sampleTitle: "Resultados demo de ejemplo",
+      sampleSubtitle: "Una vista r\u00e1pida del tipo de oportunidades locales que LeadSignal AI ayuda a priorizar.",
       sampleLeads: [
         {
-          name: "Oak & Ivy Dental",
-          niche: "Dentista en Austin",
-          score: "86",
-          signals: "Sin schema, CTA débil, sin formulario",
-          offer: "Auditoría de conversión web",
-          opener: "Noté que la clínica tiene presencia local, pero el sitio hace más difícil de lo necesario pedir una cita."
+          name: "Bright Dental Studio",
+          score: "84",
+          signals: ["Falta reserva", "CTA d\u00e9bil", "Sin Meta Pixel"],
+          offer: "Auditor\u00eda de conversi\u00f3n",
+          opener:
+            "Not\u00e9 que Bright Dental Studio podr\u00eda hacer m\u00e1s claro el proceso para pedir cita, especialmente en reserva y llamadas a la acci\u00f3n."
         },
         {
-          name: "River City Med Spa",
-          niche: "Med spa en Tampa",
-          score: "78",
-          signals: "Falta meta description, sin Meta Pixel",
-          offer: "Landing page + retargeting",
-          opener: "Tus servicios se ven premium y vi algunos ajustes rápidos que podrían convertir más visitas en consultas."
+          name: "Coral Smile Clinic",
+          score: "76",
+          signals: ["Sitio lento", "Sin schema", "P\u00e1ginas de servicios poco claras"],
+          offer: "SEO + actualizaci\u00f3n web",
+          opener:
+            "Coral Smile Clinic ya tiene una categor\u00eda local fuerte, y el sitio podr\u00eda ser m\u00e1s claro para pacientes y motores de b\u00fasqueda."
         },
         {
-          name: "Summit Roof Repair",
-          niche: "Techadores en Denver",
-          score: "72",
-          signals: "Sin redirección HTTPS, sin analítica, pocas redes",
-          offer: "SEO local y limpieza de tracking",
-          opener: "Encontré la empresa revisando búsquedas de reparación de techos en Denver y vi brechas de tracking que pueden ocultar leads."
+          name: "Miami Family Dental",
+          score: "68",
+          signals: ["Pocas rese\u00f1as", "Sin formulario", "Mobile d\u00e9bil"],
+          offer: "Auditor\u00eda de SEO local",
+          opener:
+            "Vi algunas se\u00f1ales que pueden limitar las consultas de nuevos pacientes para Miami Family Dental, sobre todo rese\u00f1as, formularios y claridad m\u00f3vil."
         }
       ],
-      howTitle: "Cómo funciona",
-      howSubtitle: "Un flujo simple para convertir datos de búsqueda local en outreach útil.",
+      copyButton: "Copiar",
+      copiedButton: "Copiado",
+      howTitle: "C\u00f3mo funciona",
+      howSubtitle: "Cuatro pasos pr\u00e1cticos desde b\u00fasqueda local hasta outreach \u00fatil.",
       steps: [
-        ["Search", "Ingresa nicho, ciudad, país, cantidad, oferta, idioma y tono."],
-        ["Analyze", "LeadSignal revisa señales técnicas, conversión, redes y tracking del sitio."],
-        ["Prioritize", "Cada negocio recibe un puntaje de oportunidad para decidir por dónde empezar."],
-        ["Contact", "Obtén resumen, oferta recomendada, razón para contactar y aperturas personalizadas."]
+        ["Search", "Ingresa nicho, ciudad, pa\u00eds, cantidad, oferta, idioma y tono."],
+        ["Analyze", "LeadSignal revisa se\u00f1ales t\u00e9cnicas, de conversi\u00f3n, redes y tracking del sitio."],
+        ["Prioritize", "Cada negocio recibe un puntaje determin\u00edstico para saber por d\u00f3nde empezar."],
+        ["Contact", "Usa un resumen, oferta recomendada, raz\u00f3n para contactar y apertura personalizada."]
       ],
-      whoTitle: "Para quién es",
-      whoSubtitle: "Diseñado para vender mejoras prácticas de marketing y web a negocios locales.",
+      signalsTitle: "Se\u00f1ales detectadas",
+      signalsSubtitle: "El MVP se enfoca en se\u00f1ales visibles de sitio web y marketing que una agencia puede explicar con claridad.",
+      signalsDetected: [
+        "HTTPS",
+        "T\u00edtulo de p\u00e1gina",
+        "Meta description",
+        "H1",
+        "Palabras de CTA",
+        "Formulario de contacto",
+        "Link de WhatsApp",
+        "Redes sociales",
+        "Google Analytics",
+        "Meta Pixel",
+        "Schema.org / JSON-LD",
+        "Links de reserva"
+      ],
+      whoTitle: "Para qui\u00e9n es",
+      whoSubtitle: "Creado para equipos y operadores independientes que venden mejoras pr\u00e1cticas de marketing a negocios locales.",
       audiences: [
-        ["Agencias", "Crea listas de prospectos para SEO, ads, sitios web y automatización."],
-        ["Freelancers", "Encuentra leads más cálidos sin pasar horas auditando sitios manualmente."],
-        ["Consultores SEO", "Detecta negocios con metadatos, schema, analítica o CTAs débiles."],
-        ["Diseñadores web", "Presenta rediseños con brechas específicas y basadas en evidencia."]
+        ["Agencias", "Crea listas de prospectos para SEO, ads, sitios web y automatizaci\u00f3n."],
+        ["Freelancers", "Encuentra leads m\u00e1s c\u00e1lidos sin pasar horas auditando sitios manualmente."],
+        ["Consultores SEO", "Detecta negocios con metadatos, schema, anal\u00edtica o CTAs d\u00e9biles."],
+        ["Dise\u00f1adores web", "Presenta redise\u00f1os con brechas espec\u00edficas y basadas en evidencia."]
       ],
-      pricingTitle: "Vista previa de créditos",
-      pricingSubtitle: "Arquitectura simple por uso hoy, lista para planes pagos luego.",
+      benefitsTitle: "Por qu\u00e9 lo usan los equipos",
+      benefitsSubtitle: "LeadSignal AI mantiene la prospecci\u00f3n basada en evidencia, no en suposiciones.",
+      benefits: [
+        ["\u00c1ngulos de outreach m\u00e1s claros", "Cada apertura est\u00e1 conectada a se\u00f1ales detectadas, as\u00ed el mensaje se siente espec\u00edfico y \u00fatil."],
+        ["Menos investigaci\u00f3n manual", "B\u00fasqueda, revisi\u00f3n web, puntuaci\u00f3n y generaci\u00f3n de aperturas viven en un solo flujo."],
+        ["Mejor priorizaci\u00f3n", "Ordena por puntaje de oportunidad y empieza por los leads que m\u00e1s pueden necesitar tu oferta."],
+        ["Listas listas para exportar", "Lleva leads puntuados a tu proceso comercial actual con exportaci\u00f3n CSV."]
+      ],
+      pricingTitle: "Vista previa de cr\u00e9ditos",
+      pricingSubtitle: "Arquitectura simple por uso hoy, lista para planes pagos despu\u00e9s.",
       pricingBullets: [
-        "Empieza con 25 créditos gratis",
-        "1 lead analizado cuesta 1 crédito",
-        "Exportación CSV incluida",
-        "Schema listo para Stripe, pagos aún no habilitados"
+        "Empieza con 25 cr\u00e9ditos gratis",
+        "1 lead analizado cuesta 1 cr\u00e9dito",
+        "Exportaci\u00f3n CSV incluida",
+        "Schema listo para Stripe, pagos a\u00fan no habilitados"
       ],
-      pricingNote: "Los pagos no están implementados intencionalmente en este MVP."
+      pricingNote: "Los pagos no est\u00e1n implementados intencionalmente en este MVP.",
+      finalEyebrow: "Listo para tu pr\u00f3ximo nicho",
+      finalCtaTitle: "Encuentra primero los negocios locales que vale la pena contactar",
+      finalCtaSubtitle:
+        "Empieza con 25 cr\u00e9ditos, prueba una ciudad y un nicho, y descubre qu\u00e9 negocios tienen brechas claras de marketing."
     },
     auth: {
       loginTitle: "Iniciar sesión",
