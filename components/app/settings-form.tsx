@@ -5,8 +5,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createClient } from "@/lib/supabase/browser";
+import type { Copy } from "@/lib/i18n";
 
-export function SettingsForm({ profile }: { profile: { id: string; full_name: string | null; company_name: string | null } }) {
+export function SettingsForm({
+  profile,
+  copy
+}: {
+  profile: { id: string; full_name: string | null; company_name: string | null };
+  copy: Copy["settings"];
+}) {
   const [message, setMessage] = useState("");
   const [isPending, startTransition] = useTransition();
 
@@ -23,7 +30,7 @@ export function SettingsForm({ profile }: { profile: { id: string; full_name: st
         })
         .eq("id", profile.id);
 
-      setMessage(error ? error.message : "Settings saved.");
+      setMessage(error ? error.message : copy.saved);
       })();
     });
   }
@@ -31,15 +38,15 @@ export function SettingsForm({ profile }: { profile: { id: string; full_name: st
   return (
     <form action={onSubmit} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="fullName">Full name</Label>
+        <Label htmlFor="fullName">{copy.fullName}</Label>
         <Input id="fullName" name="fullName" defaultValue={profile.full_name ?? ""} />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="companyName">Company</Label>
+        <Label htmlFor="companyName">{copy.company}</Label>
         <Input id="companyName" name="companyName" defaultValue={profile.company_name ?? ""} />
       </div>
       {message ? <p className="text-sm text-muted-foreground">{message}</p> : null}
-      <Button disabled={isPending}>{isPending ? "Saving..." : "Save settings"}</Button>
+      <Button disabled={isPending}>{isPending ? copy.saving : copy.save}</Button>
     </form>
   );
 }

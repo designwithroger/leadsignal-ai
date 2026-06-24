@@ -1,9 +1,13 @@
 import Link from "next/link";
 import { BarChart3, Plus, Radar, Settings } from "lucide-react";
+import { LanguageSelector } from "@/components/app/language-selector";
 import { SignOutButton } from "@/components/app/sign-out-button";
 import { createClient, getUser } from "@/lib/supabase/server";
+import { dictionary, getLanguage } from "@/lib/i18n";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const language = await getLanguage();
+  const copy = dictionary[language];
   const user = await getUser();
   const supabase = await createClient();
   const { data: profileData } = user
@@ -22,19 +26,20 @@ export default async function DashboardLayout({ children }: { children: React.Re
             LeadSignal AI
           </Link>
           <div className="flex items-center gap-2">
+            <LanguageSelector language={language} copy={copy.common} />
             <span className="hidden rounded-md border bg-card px-3 py-2 text-sm sm:inline-flex">
-              {profile?.credits ?? 0} credits
+              {profile?.credits ?? 0} {copy.common.credits}
             </span>
-            <SignOutButton />
+            <SignOutButton label={copy.nav.signOut} />
           </div>
         </div>
       </header>
       <div className="mx-auto grid max-w-7xl gap-6 px-4 py-6 lg:grid-cols-[220px_1fr]">
         <aside className="lg:sticky lg:top-20 lg:h-[calc(100vh-6rem)]">
           <nav className="grid gap-1 rounded-lg border bg-card p-2">
-            <NavItem href="/dashboard" icon={<BarChart3 className="h-4 w-4" />} label="Dashboard" />
-            <NavItem href="/dashboard/new-search" icon={<Plus className="h-4 w-4" />} label="New search" />
-            <NavItem href="/dashboard/settings" icon={<Settings className="h-4 w-4" />} label="Settings" />
+            <NavItem href="/dashboard" icon={<BarChart3 className="h-4 w-4" />} label={copy.nav.dashboard} />
+            <NavItem href="/dashboard/new-search" icon={<Plus className="h-4 w-4" />} label={copy.nav.newSearch} />
+            <NavItem href="/dashboard/settings" icon={<Settings className="h-4 w-4" />} label={copy.nav.settings} />
           </nav>
         </aside>
         <main>{children}</main>

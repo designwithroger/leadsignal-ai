@@ -1,13 +1,17 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Building2, Mail, Radar, ShieldCheck } from "lucide-react";
+import { LanguageSelector } from "@/components/app/language-selector";
 import { Button } from "@/components/ui/button";
+import { dictionary, getLanguage } from "@/lib/i18n";
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const language = await getLanguage();
+  const copy = dictionary[language];
   const features = [
-    { Icon: Building2, title: "Places search", copy: "Find businesses by niche, city, country, and quantity." },
-    { Icon: Radar, title: "Signal analysis", copy: "Detect HTTPS, metadata, forms, social links, analytics, pixels, and schema." },
-    { Icon: Mail, title: "Personalized openers", copy: "Generate concise reasons to contact and outreach starters." }
+    { Icon: Building2, title: copy.landing.features[0][0], copy: copy.landing.features[0][1] },
+    { Icon: Radar, title: copy.landing.features[1][0], copy: copy.landing.features[1][1] },
+    { Icon: Mail, title: copy.landing.features[2][0], copy: copy.landing.features[2][1] }
   ];
 
   return (
@@ -21,11 +25,12 @@ export default function LandingPage() {
             LeadSignal AI
           </Link>
           <div className="flex items-center gap-2">
+            <LanguageSelector language={language} copy={copy.common} />
             <Button asChild variant="ghost">
-              <Link href="/login">Sign in</Link>
+              <Link href="/login">{copy.nav.signIn}</Link>
             </Button>
             <Button asChild>
-              <Link href="/signup">Start free</Link>
+              <Link href="/signup">{copy.nav.startFree}</Link>
             </Button>
           </div>
         </nav>
@@ -34,25 +39,25 @@ export default function LandingPage() {
           <div className="space-y-7">
             <div className="inline-flex items-center gap-2 rounded-md border bg-white/70 px-3 py-1 text-sm text-muted-foreground">
               <ShieldCheck className="h-4 w-4 text-primary" />
-              Local lead research with credits built in
+              {copy.landing.badge}
             </div>
             <div className="space-y-4">
               <h1 className="max-w-3xl text-4xl font-semibold tracking-normal sm:text-5xl">
-                LeadSignal AI
+                {copy.landing.headline}
               </h1>
               <p className="max-w-2xl text-lg leading-8 text-muted-foreground">
-                Search local businesses, analyze their marketing gaps, score the opportunity, and generate outreach openers in one focused workflow.
+                {copy.landing.subhead}
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
               <Button asChild size="default">
                 <Link href="/signup">
-                  Create account
+                  {copy.landing.createAccount}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
               <Button asChild variant="outline">
-                <Link href="/login">Open dashboard</Link>
+                <Link href="/login">{copy.landing.openDashboard}</Link>
               </Button>
             </div>
           </div>
@@ -60,7 +65,7 @@ export default function LandingPage() {
           <div className="overflow-hidden rounded-lg border bg-card shadow-sm">
             <Image
               src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=80"
-              alt="Team reviewing local business opportunities"
+              alt={copy.landing.imageAlt}
               width={1200}
               height={800}
               className="h-56 w-full object-cover sm:h-72"
@@ -68,9 +73,9 @@ export default function LandingPage() {
             />
             <div className="grid gap-3 p-4">
               {[
-                ["Opportunity score", "82", "Missing form, no schema, weak CTA"],
-                ["Recommended offer", "Fast conversion audit", "Clear reason to contact"],
-                ["Openers generated", "3", "Ready for email or LinkedIn"]
+                [copy.landing.statScore, "82", copy.landing.statScoreNote],
+                [copy.landing.statOffer, language === "es" ? "Auditoría rápida" : "Fast conversion audit", copy.landing.statOfferNote],
+                [copy.landing.statOpeners, "3", copy.landing.statOpenersNote]
               ].map(([label, value, note]) => (
                 <div key={label} className="grid grid-cols-[1fr_auto] gap-4 rounded-md border bg-background p-3">
                   <div>

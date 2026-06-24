@@ -5,11 +5,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/lib/utils";
+import { dictionary, getLanguage } from "@/lib/i18n";
 import type { Profile, Search } from "@/types/database";
 
 type RecentSearch = Search & { leads?: { count: number }[] };
 
 export default async function DashboardPage() {
+  const language = await getLanguage();
+  const copy = dictionary[language];
   const user = await getUser();
   const supabase = await createClient();
   const { data: profileData } = await supabase.from("profiles").select("*").eq("id", user!.id).single();
@@ -27,27 +30,27 @@ export default async function DashboardPage() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-normal">Dashboard</h1>
-          <p className="text-muted-foreground">Track searches, credits, and generated opportunities.</p>
+          <h1 className="text-2xl font-semibold tracking-normal">{copy.dashboard.title}</h1>
+          <p className="text-muted-foreground">{copy.dashboard.subtitle}</p>
         </div>
         <Button asChild>
           <Link href="/dashboard/new-search">
             <Plus className="h-4 w-4" />
-            New search
+            {copy.nav.newSearch}
           </Link>
         </Button>
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
-        <Metric title="Credits" value={profile?.credits ?? 0} note="1 credit per analyzed lead" />
-        <Metric title="Searches" value={searches.length} note="Recent saved searches" />
-        <Metric title="Leads" value={leads?.length ?? 0} note="Analyzed and pending leads" />
+        <Metric title={copy.settings.credits} value={profile?.credits ?? 0} note={copy.dashboard.creditsNote} />
+        <Metric title={copy.dashboard.searches} value={searches.length} note={copy.dashboard.searchesNote} />
+        <Metric title={copy.dashboard.leads} value={leads?.length ?? 0} note={copy.dashboard.leadsNote} />
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Recent searches</CardTitle>
-          <CardDescription>Open a search to review scored leads and export CSV.</CardDescription>
+          <CardTitle>{copy.dashboard.recentSearches}</CardTitle>
+          <CardDescription>{copy.dashboard.recentDescription}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
           {searches.map((search) => (
@@ -58,7 +61,7 @@ export default async function DashboardPage() {
             >
               <div>
                 <div className="font-medium">{search.niche} in {search.city}</div>
-                <div className="text-sm text-muted-foreground">{formatDate(search.created_at)} · {search.quantity} requested</div>
+                <div className="text-sm text-muted-foreground">{formatDate(search.created_at)} - {search.quantity} {copy.dashboard.requested}</div>
               </div>
               <Badge>{search.status}</Badge>
               <ArrowRight className="h-4 w-4 self-center text-muted-foreground" />
@@ -66,7 +69,7 @@ export default async function DashboardPage() {
           ))}
           {searches.length === 0 ? (
             <div className="rounded-md border border-dashed p-8 text-center text-muted-foreground">
-              No searches yet.
+              {copy.dashboard.noSearches}
             </div>
           ) : null}
         </CardContent>

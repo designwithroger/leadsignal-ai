@@ -7,8 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
+import type { Copy } from "@/lib/i18n";
 
-export function NewSearchForm({ credits }: { credits: number }) {
+export function NewSearchForm({ credits, copy }: { credits: number; copy: Copy["search"] }) {
   const router = useRouter();
   const [error, setError] = useState("");
   const [isPending, startTransition] = useTransition();
@@ -35,7 +36,7 @@ export function NewSearchForm({ credits }: { credits: number }) {
         const json = await response.json();
 
         if (!response.ok) {
-          setError(typeof json.error === "string" ? json.error : "Please check the form and try again.");
+          setError(typeof json.error === "string" ? json.error : copy.formError);
           return;
         }
 
@@ -48,32 +49,32 @@ export function NewSearchForm({ credits }: { credits: number }) {
   return (
     <form action={onSubmit} className="space-y-6">
       <div className="grid gap-4 md:grid-cols-2">
-        <Field label="Niche" name="niche" placeholder="Dentists, med spas, roofers" />
-        <Field label="City" name="city" placeholder="Austin" />
-        <Field label="Country" name="country" placeholder="United States" defaultValue="United States" />
+        <Field label={copy.niche} name="niche" placeholder={copy.nichePlaceholder} />
+        <Field label={copy.city} name="city" placeholder="Austin" />
+        <Field label={copy.country} name="country" placeholder="United States" defaultValue="United States" />
         <div className="space-y-2">
-          <Label htmlFor="quantity">Quantity</Label>
+          <Label htmlFor="quantity">{copy.quantity}</Label>
           <Input id="quantity" name="quantity" type="number" min={1} max={Math.min(25, credits)} defaultValue={Math.min(10, credits)} required />
-          <p className="text-xs text-muted-foreground">{credits} credits available. Each analyzed lead costs 1 credit.</p>
+          <p className="text-xs text-muted-foreground">{credits} {copy.creditsAvailable}</p>
         </div>
         <div className="space-y-2">
-          <Label htmlFor="offerType">Offer type</Label>
+          <Label htmlFor="offerType">{copy.offerType}</Label>
           <Select id="offerType" name="offerType" defaultValue="website_audit">
-            <option value="website_audit">Website audit</option>
-            <option value="seo">SEO</option>
-            <option value="ads">Paid ads</option>
-            <option value="social_media">Social media</option>
-            <option value="automation">Automation</option>
-            <option value="custom">Custom</option>
+            <option value="website_audit">{copy.offers.website_audit}</option>
+            <option value="seo">{copy.offers.seo}</option>
+            <option value="ads">{copy.offers.ads}</option>
+            <option value="social_media">{copy.offers.social_media}</option>
+            <option value="automation">{copy.offers.automation}</option>
+            <option value="custom">{copy.offers.custom}</option>
           </Select>
         </div>
-        <Field label="Language" name="language" defaultValue="English" />
-        <Field label="Tone" name="tone" defaultValue="friendly" />
+        <Field label={copy.language} name="language" defaultValue="English" />
+        <Field label={copy.tone} name="tone" defaultValue="friendly" />
       </div>
       {error ? <p className="rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">{error}</p> : null}
       <Button disabled={isPending || credits < 1}>
         <Search className="h-4 w-4" />
-        {isPending ? "Starting search..." : "Run search"}
+        {isPending ? copy.starting : copy.run}
       </Button>
     </form>
   );

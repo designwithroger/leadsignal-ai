@@ -8,10 +8,11 @@ import { scoreTone } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import type { Copy } from "@/lib/i18n";
 
 type SortKey = "score" | "name" | "rating";
 
-export function ResultsTable({ leads, searchId }: { leads: Lead[]; searchId: string }) {
+export function ResultsTable({ leads, searchId, copy }: { leads: Lead[]; searchId: string; copy: Copy["results"] }) {
   const [sortKey, setSortKey] = useState<SortKey>("score");
 
   const sorted = useMemo(() => {
@@ -27,19 +28,19 @@ export function ResultsTable({ leads, searchId }: { leads: Lead[]; searchId: str
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap gap-2">
           <SortButton active={sortKey === "score"} onClick={() => setSortKey("score")}>
-            Score
+            {copy.score}
           </SortButton>
           <SortButton active={sortKey === "name"} onClick={() => setSortKey("name")}>
-            Name
+            {copy.name}
           </SortButton>
           <SortButton active={sortKey === "rating"} onClick={() => setSortKey("rating")}>
-            Rating
+            {copy.rating}
           </SortButton>
         </div>
         <Button asChild variant="outline">
           <a href={`/api/searches/${searchId}/csv`}>
             <Download className="h-4 w-4" />
-            Export CSV
+            {copy.exportCsv}
           </a>
         </Button>
       </div>
@@ -48,11 +49,11 @@ export function ResultsTable({ leads, searchId }: { leads: Lead[]; searchId: str
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Business</TableHead>
-                <TableHead>Score</TableHead>
-                <TableHead>Signals</TableHead>
-                <TableHead>Recommended offer</TableHead>
-                <TableHead className="text-right">Details</TableHead>
+                <TableHead>{copy.business}</TableHead>
+                <TableHead>{copy.score}</TableHead>
+                <TableHead>{copy.signals}</TableHead>
+                <TableHead>{copy.recommendedOffer}</TableHead>
+                <TableHead className="text-right">{copy.details}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -68,12 +69,12 @@ export function ResultsTable({ leads, searchId }: { leads: Lead[]; searchId: str
                     </Badge>
                   </TableCell>
                   <TableCell className="min-w-48 text-xs text-muted-foreground">
-                    {lead.status === "failed" ? lead.error_message : signalSummary(lead)}
+                    {lead.status === "failed" ? lead.error_message : signalSummary(lead, copy)}
                   </TableCell>
-                  <TableCell className="min-w-64">{lead.recommended_offer ?? "Analysis pending"}</TableCell>
+                  <TableCell className="min-w-64">{lead.recommended_offer ?? copy.pending}</TableCell>
                   <TableCell className="text-right">
                     <Button asChild variant="ghost" size="sm">
-                      <Link href={`/dashboard/leads/${lead.id}`}>Open</Link>
+                      <Link href={`/dashboard/leads/${lead.id}`}>{copy.open}</Link>
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -81,7 +82,7 @@ export function ResultsTable({ leads, searchId }: { leads: Lead[]; searchId: str
               {sorted.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={5} className="py-10 text-center text-muted-foreground">
-                    No leads yet.
+                    {copy.noLeads}
                   </TableCell>
                 </TableRow>
               ) : null}
@@ -102,14 +103,14 @@ function SortButton({ active, children, onClick }: { active: boolean; children: 
   );
 }
 
-function signalSummary(lead: Lead) {
+function signalSummary(lead: Lead, copy: Copy["results"]) {
   const signals = lead.website_signals;
   const gaps = [
-    !lead.website && "No website",
-    !signals.hasMetaDescription && "No meta",
-    !signals.hasForm && !signals.hasWhatsApp && "No clear capture",
-    !signals.hasSchemaOrg && "No schema"
+    !lead.website && copy.noWebsite,
+    !signals.hasMetaDescription && copy.noMeta,
+    !signals.hasForm && !signals.hasWhatsApp && copy.noCapture,
+    !signals.hasSchemaOrg && copy.noSchema
   ].filter(Boolean);
 
-  return gaps.join(" - ") || "Core signals present";
+  return gaps.join(" - ") || copy.coreSignals;
 }

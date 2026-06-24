@@ -1,18 +1,26 @@
 import { Suspense } from "react";
 import { AuthForm } from "@/components/app/auth-form";
+import { LanguageSelector } from "@/components/app/language-selector";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { dictionary, getLanguage } from "@/lib/i18n";
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  const language = await getLanguage();
+  const copy = dictionary[language];
+
   return (
     <main className="flex min-h-screen items-center justify-center px-4">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>Sign in</CardTitle>
-          <CardDescription>Open your LeadSignal AI dashboard.</CardDescription>
+          <div className="mb-2 flex justify-end">
+            <LanguageSelector language={language} copy={copy.common} />
+          </div>
+          <CardTitle>{copy.auth.loginTitle}</CardTitle>
+          <CardDescription>{copy.auth.loginDescription}</CardDescription>
         </CardHeader>
         <CardContent>
           <Suspense fallback={<div className="h-40 animate-pulse rounded-md bg-muted" />}>
-            <AuthForm mode="login" />
+            <AuthForm mode="login" copy={copy.auth} commonCopy={copy.common} />
           </Suspense>
         </CardContent>
       </Card>
