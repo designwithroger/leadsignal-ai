@@ -1,5 +1,6 @@
 import { createClient, getUser } from "@/lib/supabase/server";
 import { ResultsTable } from "@/components/app/results-table";
+import { SearchAutoRefresh } from "@/components/app/search-auto-refresh";
 import { Badge } from "@/components/ui/badge";
 import type { Lead, Search } from "@/types/database";
 
@@ -20,15 +21,27 @@ export default async function SearchResultsPage({ params }: { params: Promise<{ 
     return <div className="rounded-lg border bg-card p-8">Search not found.</div>;
   }
 
+  const isProcessing = search.status === "queued" || search.status === "running";
+
   return (
     <div className="space-y-6">
+      <SearchAutoRefresh status={search.status} />
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-normal">{search.niche} in {search.city}</h1>
-          <p className="text-muted-foreground">{search.country} · {search.language} · {search.tone}</p>
+          <h1 className="text-2xl font-semibold tracking-normal">
+            {search.niche} in {search.city}
+          </h1>
+          <p className="text-muted-foreground">
+            {search.country} - {search.language} - {search.tone}
+          </p>
         </div>
         <Badge>{search.status}</Badge>
       </div>
+      {isProcessing ? (
+        <div className="rounded-md border bg-card p-4 text-sm text-muted-foreground">
+          Analysis is running in the background. Results will refresh automatically.
+        </div>
+      ) : null}
       {search.error_message ? (
         <div className="rounded-md border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive">
           {search.error_message}

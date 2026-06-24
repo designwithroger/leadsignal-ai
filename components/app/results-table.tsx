@@ -26,9 +26,15 @@ export function ResultsTable({ leads, searchId }: { leads: Lead[]; searchId: str
     <div className="space-y-4">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap gap-2">
-          <SortButton active={sortKey === "score"} onClick={() => setSortKey("score")}>Score</SortButton>
-          <SortButton active={sortKey === "name"} onClick={() => setSortKey("name")}>Name</SortButton>
-          <SortButton active={sortKey === "rating"} onClick={() => setSortKey("rating")}>Rating</SortButton>
+          <SortButton active={sortKey === "score"} onClick={() => setSortKey("score")}>
+            Score
+          </SortButton>
+          <SortButton active={sortKey === "name"} onClick={() => setSortKey("name")}>
+            Name
+          </SortButton>
+          <SortButton active={sortKey === "rating"} onClick={() => setSortKey("rating")}>
+            Rating
+          </SortButton>
         </div>
         <Button asChild variant="outline">
           <a href={`/api/searches/${searchId}/csv`}>
@@ -58,7 +64,7 @@ export function ResultsTable({ leads, searchId }: { leads: Lead[]; searchId: str
                   </TableCell>
                   <TableCell>
                     <Badge className={lead.opportunity_score >= 75 ? "border-accent/30 bg-accent/10 text-accent" : ""}>
-                      {lead.opportunity_score} · {scoreTone(lead.opportunity_score)}
+                      {lead.opportunity_score} - {scoreTone(lead.opportunity_score)}
                     </Badge>
                   </TableCell>
                   <TableCell className="min-w-48 text-xs text-muted-foreground">
@@ -105,5 +111,5 @@ function signalSummary(lead: Lead) {
     !signals.hasSchemaOrg && "No schema"
   ].filter(Boolean);
 
-  return gaps.join(" · ") || "Core signals present";
+  return gaps.join(" - ") || "Core signals present";
 }

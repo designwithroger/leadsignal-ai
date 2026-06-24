@@ -50,6 +50,6 @@ A focused SaaS MVP for finding local businesses, analyzing marketing presence, s
 
 - New users receive 25 credits through the auth trigger.
 - Creating a search spends 1 credit per analyzed lead.
-- The search API runs the lead pipeline synchronously for MVP simplicity.
+- The search API creates a search immediately, then runs the lead pipeline in a post-response background task.
 - If OpenAI fails, the app stores deterministic fallback outreach copy.
 - Stripe can be added by wiring checkout/webhooks to `customer_accounts` and credit packages later.

@@ -27,20 +27,20 @@ export function NewSearchForm({ credits }: { credits: number }) {
 
     startTransition(() => {
       void (async () => {
-      const response = await fetch("/api/searches", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-      const json = await response.json();
+        const response = await fetch("/api/searches", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const json = await response.json();
 
-      if (!response.ok) {
-        setError(typeof json.error === "string" ? json.error : "Please check the form and try again.");
-        return;
-      }
+        if (!response.ok) {
+          setError(typeof json.error === "string" ? json.error : "Please check the form and try again.");
+          return;
+        }
 
-      router.push(`/dashboard/searches/${json.searchId}`);
-      router.refresh();
+        router.push(`/dashboard/searches/${json.searchId}`);
+        router.refresh();
       })();
     });
   }
@@ -73,7 +73,7 @@ export function NewSearchForm({ credits }: { credits: number }) {
       {error ? <p className="rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">{error}</p> : null}
       <Button disabled={isPending || credits < 1}>
         <Search className="h-4 w-4" />
-        {isPending ? "Finding and analyzing leads..." : "Run search"}
+        {isPending ? "Starting search..." : "Run search"}
       </Button>
     </form>
   );

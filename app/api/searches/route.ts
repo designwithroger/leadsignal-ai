@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 import { createClient, getUser } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { searchSchema } from "@/lib/validation";
@@ -55,7 +55,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: error?.message ?? "Could not create search." }, { status: 500 });
   }
 
-  await runSearchPipeline({ supabase, searchId: search.id, userId: user.id, input: parsed.data });
+  after(async () => {
+    try {
+      await runSearchPipeline({ supabase, searchId: search.id, userId: user.id, input: parsed.data });
+    } catch (pipelineError) {
+      console.error("Lead search pipeline failed", pipelineError);
+    }
+  });
 
-  return NextResponse.json({ searchId: search.id });
+  return NextResponse.json({ searchId: search.id, status: "queued" }, { status: 202 });
 }
