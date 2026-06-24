@@ -1,7 +1,8 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { analyzeWebsite, fetchWebsiteHtml } from "@/services/websiteAnalyzer";
 import { scoreOpportunity } from "@/services/scoring";
-import type { WebsiteSignals } from "@/types/database";
+import { generateAiLeadOutput, type AiLeadOutput } from "@/services/openai";
+import type { OfferType, WebsiteSignals } from "@/types/database";
 
 export type LeadAnalysisInput = {
   businessName: string;
@@ -18,6 +19,12 @@ export type LeadAnalysisResult = {
   websiteSignals: WebsiteSignals;
   opportunityScore: number;
   errorMessage: string | null;
+};
+
+export type AiGenerationInput = {
+  offerType: OfferType;
+  language: string;
+  tone: string;
 };
 
 export async function analyzeLead(input: LeadAnalysisInput): Promise<LeadAnalysisResult> {
@@ -38,8 +45,36 @@ export async function analyzeAndStoreLead(params: {
   userId: string;
   leadId: string;
   input: LeadAnalysisInput;
+  ai?: AiGenerationInput;
 }) {
   const analysis = await analyzeLead(params.input);
+  let aiOutput: AiLeadOutput | null = null;
+  let errorMessage = analysis.errorMessage;
+
+  if (params.ai) {
+    try {
+      aiOutput = await generateAiLeadOutput({
+        business: {
+          name: params.input.businessName,
+          category: params.input.category,
+          websiteUrl: params.input.websiteUrl,
+          city: params.input.city,
+          country: params.input.country,
+          rating: params.input.rating,
+          reviewsCount: params.input.reviewsCount
+        },
+        websiteSignals: analysis.websiteSignals,
+        opportunityScore: analysis.opportunityScore,
+        offerType: params.ai.offerType,
+        language: params.ai.language,
+        tone: params.ai.tone
+      });
+    } catch (error) {
+      errorMessage = [errorMessage, error instanceof Error ? `AI generation failed: ${error.message}` : "AI generation failed."]
+        .filter(Boolean)
+        .join(" ");
+    }
+  }
 
   const { error } = await params.supabase
     .from("leads")
@@ -47,11 +82,12 @@ export async function analyzeAndStoreLead(params: {
       status: "analyzed",
       website_signals: analysis.websiteSignals,
       opportunity_score: analysis.opportunityScore,
-      ai_summary: null,
-      recommended_offer: null,
-      reason_to_contact: null,
-      outreach_openers: [],
-      error_message: analysis.errorMessage,
+      ai_summary: aiOutput?.summary ?? null,
+      ai_main_problems: aiOutput?.mainProblems ?? [],
+      recommended_offer: aiOutput?.recommendedOffer ?? null,
+      reason_to_contact: aiOutput?.reasonToContact ?? null,
+      outreach_openers: aiOutput?.openers ?? {},
+      error_message: errorMessage || null,
       analyzed_at: new Date().toISOString()
     })
     .eq("id", params.leadId)
@@ -59,5 +95,5 @@ export async function analyzeAndStoreLead(params: {
 
   if (error) throw error;
 
-  return analysis;
+  return { ...analysis, aiOutput };
 }

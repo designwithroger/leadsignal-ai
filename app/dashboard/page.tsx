@@ -35,7 +35,11 @@ export default async function DashboardPage() {
 
   const analyzedLeads = leads.filter((lead) => lead.status === "analyzed");
   const highOpportunityLeads = analyzedLeads.filter((lead) => lead.opportunity_score >= 75);
-  const openersGenerated = analyzedLeads.reduce((total, lead) => total + (Array.isArray(lead.outreach_openers) ? lead.outreach_openers.length : 0), 0);
+  const openersGenerated = analyzedLeads.reduce((total, lead) => {
+    if (Array.isArray(lead.outreach_openers)) return total + lead.outreach_openers.length;
+    if (lead.outreach_openers && typeof lead.outreach_openers === "object") return total + Object.keys(lead.outreach_openers).length;
+    return total;
+  }, 0);
   const credits = profile?.credits ?? 0;
   const creditProgress = Math.max(0, Math.min(100, (credits / 25) * 100));
 

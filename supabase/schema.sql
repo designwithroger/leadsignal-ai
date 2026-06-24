@@ -56,6 +56,7 @@ create table public.leads (
   website_signals jsonb not null default '{}'::jsonb,
   opportunity_score integer not null default 0 check (opportunity_score between 0 and 100),
   ai_summary text,
+  ai_main_problems jsonb not null default '[]'::jsonb,
   recommended_offer text,
   reason_to_contact text,
   outreach_openers jsonb not null default '[]'::jsonb,

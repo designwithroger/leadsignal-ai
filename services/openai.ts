@@ -1,51 +1,73 @@
 import OpenAI from "openai";
 import { z } from "zod";
 import { requireServerEnv } from "@/lib/env";
-import type { SearchInput } from "@/lib/validation";
-import type { WebsiteSignals } from "@/types/database";
+import type { OfferType, WebsiteSignals } from "@/types/database";
 
-const leadCopySchema = z.object({
+const aiLeadOutputSchema = z.object({
   summary: z.string(),
+  mainProblems: z.array(z.string()),
   recommendedOffer: z.string(),
   reasonToContact: z.string(),
-  outreachOpeners: z.array(z.string()).min(3).max(5)
+  openers: z.object({
+    email: z.string(),
+    linkedin: z.string(),
+    instagram: z.string(),
+    whatsapp: z.string()
+  })
 });
 
-export type LeadCopy = z.infer<typeof leadCopySchema>;
+export type AiLeadOutput = z.infer<typeof aiLeadOutputSchema>;
 
-export async function generateLeadCopy(params: {
-  businessName: string;
-  address?: string | null;
-  website?: string | null;
-  signals: WebsiteSignals;
-  score: number;
-  search: SearchInput;
-}): Promise<LeadCopy> {
+export async function generateAiLeadOutput(params: {
+  business: {
+    name: string;
+    category: string;
+    websiteUrl?: string | null;
+    city: string;
+    country: string;
+    rating?: number | null;
+    reviewsCount?: number | null;
+  };
+  websiteSignals: WebsiteSignals;
+  opportunityScore: number;
+  offerType: OfferType;
+  language: string;
+  tone: string;
+}): Promise<AiLeadOutput> {
   const client = new OpenAI({ apiKey: requireServerEnv("OPENAI_API_KEY") });
 
   const completion = await client.chat.completions.create({
     model: "gpt-4o-mini",
-    temperature: 0.4,
+    temperature: 0.35,
     response_format: {
       type: "json_schema",
       json_schema: {
-        name: "lead_outreach",
+        name: "leadsignal_opener_generation",
         strict: true,
         schema: {
           type: "object",
           additionalProperties: false,
           properties: {
             summary: { type: "string" },
+            mainProblems: {
+              type: "array",
+              items: { type: "string" }
+            },
             recommendedOffer: { type: "string" },
             reasonToContact: { type: "string" },
-            outreachOpeners: {
-              type: "array",
-              minItems: 3,
-              maxItems: 5,
-              items: { type: "string" }
+            openers: {
+              type: "object",
+              additionalProperties: false,
+              properties: {
+                email: { type: "string" },
+                linkedin: { type: "string" },
+                instagram: { type: "string" },
+                whatsapp: { type: "string" }
+              },
+              required: ["email", "linkedin", "instagram", "whatsapp"]
             }
           },
-          required: ["summary", "recommendedOffer", "reasonToContact", "outreachOpeners"]
+          required: ["summary", "mainProblems", "recommendedOffer", "reasonToContact", "openers"]
         }
       }
     },
@@ -53,50 +75,30 @@ export async function generateLeadCopy(params: {
       {
         role: "system",
         content:
-          "You write concise, specific B2B outreach intelligence for local businesses. Avoid fake claims. Use the requested language and tone."
+          "You generate concise B2B outreach intelligence for agencies, freelancers, SEO consultants, and web designers. Do not invent facts. Only reference detected website signals supplied by the user. Avoid spammy language. Keep all openers natural, specific, and short."
       },
       {
         role: "user",
         content: JSON.stringify({
-          business: params.businessName,
-          address: params.address,
-          website: params.website,
-          opportunityScore: params.score,
-          desiredOffer: params.search.offerType,
-          language: params.search.language,
-          tone: params.search.tone,
-          websiteSignals: params.signals
+          task: "Generate structured outreach output for a local business lead.",
+          rules: [
+            "Do not invent facts.",
+            "Only reference detected signals.",
+            "Keep openers concise and natural.",
+            "Avoid sounding spammy.",
+            "Make the message useful for agencies and freelancers."
+          ],
+          business: params.business,
+          websiteSignals: params.websiteSignals,
+          opportunityScore: params.opportunityScore,
+          selectedOfferType: params.offerType,
+          selectedLanguage: params.language,
+          selectedTone: params.tone
         })
       }
     ]
   });
 
   const raw = completion.choices[0]?.message.content ?? "{}";
-  return leadCopySchema.parse(JSON.parse(raw));
-}
-
-export function fallbackLeadCopy(params: {
-  businessName: string;
-  website?: string | null;
-  signals: WebsiteSignals;
-  score: number;
-  search: SearchInput;
-}): LeadCopy {
-  const missing = [
-    !params.website && "no visible website",
-    !params.signals.hasMetaDescription && "missing meta description",
-    !params.signals.hasForm && "no lead form detected",
-    params.signals.ctaWords.length === 0 && "weak calls to action"
-  ].filter(Boolean);
-
-  return {
-    summary: `${params.businessName} has an opportunity score of ${params.score}. Key gaps: ${missing.join(", ") || "basic optimization opportunities"}.`,
-    recommendedOffer: `A ${params.search.offerType.replaceAll("_", " ")} offer focused on fast, visible improvements.`,
-    reasonToContact: `Their current online presence shows signals that a practical marketing improvement could help convert more local demand.`,
-    outreachOpeners: [
-      `I noticed ${params.businessName} while researching ${params.search.niche} businesses in ${params.search.city}.`,
-      `Your local presence looks established, and I spotted a few quick website conversion opportunities.`,
-      `I put together a short idea that could help more visitors turn into inquiries.`
-    ]
-  };
+  return aiLeadOutputSchema.parse(JSON.parse(raw));
 }

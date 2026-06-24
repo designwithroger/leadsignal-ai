@@ -31,8 +31,18 @@ export function leadsToCsv(leads: Lead[]) {
     lead.ai_summary,
     lead.recommended_offer,
     lead.reason_to_contact,
-    lead.outreach_openers.join(" | ")
+    formatOpeners(lead.outreach_openers)
   ]);
 
   return [headers, ...rows].map((row) => row.map(escapeCell).join(",")).join("\n");
+}
+
+function formatOpeners(openers: Lead["outreach_openers"]) {
+  if (Array.isArray(openers)) return openers.join(" | ");
+  if (openers && typeof openers === "object") {
+    return Object.entries(openers)
+      .map(([channel, opener]) => `${channel}: ${opener}`)
+      .join(" | ");
+  }
+  return "";
 }

@@ -28,6 +28,15 @@ export type WebsiteSignals = {
   bookingLinks: string[];
 };
 
+export type OutreachOpeners =
+  | string[]
+  | {
+      email: string;
+      linkedin: string;
+      instagram: string;
+      whatsapp: string;
+    };
+
 export type Lead = {
   id: string;
   search_id: string;
@@ -43,9 +52,10 @@ export type Lead = {
   website_signals: WebsiteSignals;
   opportunity_score: number;
   ai_summary: string | null;
+  ai_main_problems?: string[] | null;
   recommended_offer: string | null;
   reason_to_contact: string | null;
-  outreach_openers: string[];
+  outreach_openers: OutreachOpeners;
   error_message: string | null;
   created_at: string;
   analyzed_at: string | null;

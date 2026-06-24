@@ -19,6 +19,7 @@ export default async function LeadDetailPage({ params }: { params: Promise<{ id:
   const lead = data as Lead;
   const signals = lead.website_signals as WebsiteSignals;
   const socialLinks = signals.socialLinks ?? [];
+  const openers = normalizeOpeners(lead.outreach_openers);
 
   return (
     <div className="space-y-6">
@@ -52,9 +53,9 @@ export default async function LeadDetailPage({ params }: { params: Promise<{ id:
               <CardDescription>{copy.lead.openersDescription}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
-              {(lead.outreach_openers ?? []).map((opener, index) => (
-                <div key={opener} className="rounded-md border p-4 text-sm leading-6">
-                  <span className="font-medium">#{index + 1}</span> {opener}
+              {openers.map(([channel, opener]) => (
+                <div key={channel} className="rounded-md border p-4 text-sm leading-6">
+                  <span className="font-medium capitalize">{channel}</span> {opener}
                 </div>
               ))}
             </CardContent>
@@ -105,6 +106,18 @@ export default async function LeadDetailPage({ params }: { params: Promise<{ id:
       </div>
     </div>
   );
+}
+
+function normalizeOpeners(openers: Lead["outreach_openers"]) {
+  if (Array.isArray(openers)) {
+    return openers.map((opener, index) => [`#${index + 1}`, opener] as const);
+  }
+
+  if (openers && typeof openers === "object") {
+    return Object.entries(openers);
+  }
+
+  return [];
 }
 
 function Info({ label, value, unknown }: { label: string; value: string | null | undefined; unknown: string }) {

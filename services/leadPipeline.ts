@@ -51,6 +51,11 @@ export async function runSearchPipeline(params: {
             country: input.country,
             rating: place.rating ?? null,
             reviewsCount: place.reviews ?? null
+          },
+          ai: {
+            offerType: input.offerType,
+            language: input.language,
+            tone: input.tone
           }
         });
       } catch (leadError) {

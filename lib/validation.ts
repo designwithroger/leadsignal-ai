@@ -28,7 +28,10 @@ export const leadAnalysisSchema = z.object({
   city: z.string().min(1).max(100),
   country: z.string().min(1).max(100),
   rating: z.coerce.number().min(0).max(5).optional().nullable(),
-  reviewsCount: z.coerce.number().int().min(0).optional().nullable()
+  reviewsCount: z.coerce.number().int().min(0).optional().nullable(),
+  offerType: z.enum(["website_audit", "seo", "ads", "social_media", "automation", "custom"]),
+  language: z.string().min(2).max(40),
+  tone: z.string().min(2).max(40)
 });
 
 export type SearchInput = z.infer<typeof searchSchema>;
