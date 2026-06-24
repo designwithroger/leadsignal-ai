@@ -38,7 +38,7 @@ A focused SaaS MVP for finding local businesses, analyzing marketing presence, s
    NEXT_PUBLIC_APP_URL=http://localhost:3000
    ```
 
-4. Run `supabase/schema.sql` in the Supabase SQL editor.
+4. Run `supabase/schema.sql` in the Supabase SQL editor, or use the migration in `supabase/migrations` with the Supabase CLI.
 
 5. Start the app:
 
@@ -53,3 +53,42 @@ A focused SaaS MVP for finding local businesses, analyzing marketing presence, s
 - The search API creates a search immediately, then runs the lead pipeline in a post-response background task.
 - If OpenAI fails, the app stores deterministic fallback outreach copy.
 - Stripe can be added by wiring checkout/webhooks to `customer_accounts` and credit packages later.
+
+## Deployment
+
+This repo is ready for Vercel and Supabase.
+
+1. Create or link a Supabase project, then push migrations:
+
+   ```bash
+   npm run db:link
+   npm run db:push
+   ```
+
+2. In Supabase Auth URL Configuration, set:
+
+   ```txt
+   Site URL: https://YOUR_VERCEL_DOMAIN
+   Redirect URLs:
+   http://localhost:3000/auth/callback
+   https://YOUR_VERCEL_DOMAIN/auth/callback
+   ```
+
+3. Import the GitHub repo into Vercel.
+
+4. Add Vercel environment variables for Production, Preview, and Development:
+
+   ```bash
+   NEXT_PUBLIC_SUPABASE_URL
+   NEXT_PUBLIC_SUPABASE_ANON_KEY
+   SUPABASE_SERVICE_ROLE_KEY
+   OPENAI_API_KEY
+   GOOGLE_PLACES_API_KEY
+   NEXT_PUBLIC_APP_URL
+   ```
+
+5. Deploy:
+
+   ```bash
+   npm run deploy:prod
+   ```
