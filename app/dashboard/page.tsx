@@ -41,6 +41,22 @@ export default async function DashboardPage() {
         </Button>
       </div>
 
+      <div className="rounded-lg border bg-card p-5">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div className="max-w-2xl">
+            <h2 className="font-semibold">{copy.dashboard.quickStartTitle}</h2>
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">{copy.dashboard.quickStartBody}</p>
+            <p className="mt-2 text-xs text-muted-foreground">{copy.dashboard.quickStartNote}</p>
+          </div>
+          <Button asChild variant="outline">
+            <Link href="/dashboard/new-search">
+              {copy.dashboard.quickStartCta}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
+      </div>
+
       <div className="grid gap-4 md:grid-cols-3">
         <Metric title={copy.settings.credits} value={profile?.credits ?? 0} note={copy.dashboard.creditsNote} />
         <Metric title={copy.dashboard.searches} value={searches.length} note={copy.dashboard.searchesNote} />

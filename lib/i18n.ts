@@ -26,18 +26,19 @@ export const dictionary = {
     },
     nav: {
       signIn: "Sign in",
-      startFree: "Start free",
+      startFree: "Start free with 25 credits",
       dashboard: "Dashboard",
       newSearch: "New search",
       settings: "Settings",
       signOut: "Sign out"
     },
     landing: {
-      badge: "Local lead research with credits built in",
-      headline: "LeadSignal AI",
+      badge: "Built for agencies, freelancers, SEO consultants, and web designers",
+      headline: "Turn local business gaps into qualified outreach",
       subhead:
-        "Search local businesses, analyze their marketing gaps, score the opportunity, and generate outreach openers in one focused workflow.",
-      createAccount: "Create account",
+        "Find local businesses with visible marketing gaps, prioritize the best opportunities, and generate personalized openers before your competitors do.",
+      createAccount: "Start free with 25 credits",
+      viewSampleLeads: "View sample leads",
       openDashboard: "Open dashboard",
       imageAlt: "Team reviewing local business opportunities",
       statScore: "Opportunity score",
@@ -50,7 +51,63 @@ export const dictionary = {
         ["Places search", "Find businesses by niche, city, country, and quantity."],
         ["Signal analysis", "Detect HTTPS, metadata, forms, social links, analytics, pixels, and schema."],
         ["Personalized openers", "Generate concise reasons to contact and outreach starters."]
-      ]
+      ],
+      sampleTitle: "Sample local lead report",
+      sampleSubtitle: "See the kind of opportunities LeadSignal AI surfaces before you create an account.",
+      sampleLeads: [
+        {
+          name: "Oak & Ivy Dental",
+          niche: "Dentist in Austin",
+          score: "86",
+          signals: "No schema, weak CTA, no lead form",
+          offer: "Website conversion audit",
+          opener:
+            "I noticed your practice ranks locally, but the website makes it harder than it should for new patients to request an appointment."
+        },
+        {
+          name: "River City Med Spa",
+          niche: "Med spa in Tampa",
+          score: "78",
+          signals: "Meta description missing, no Meta Pixel",
+          offer: "Landing page + retargeting setup",
+          opener:
+            "Your services look premium, and I spotted a few quick fixes that could turn more treatment-page visitors into consultations."
+        },
+        {
+          name: "Summit Roof Repair",
+          niche: "Roofer in Denver",
+          score: "72",
+          signals: "No HTTPS redirect, no analytics, limited social links",
+          offer: "Local SEO and tracking cleanup",
+          opener:
+            "I found your company while checking roof repair searches in Denver and saw a few tracking gaps that may be hiding good leads."
+        }
+      ],
+      howTitle: "How it works",
+      howSubtitle: "A simple workflow for turning local search data into useful outreach.",
+      steps: [
+        ["Search", "Enter a niche, city, country, quantity, offer type, language, and tone."],
+        ["Analyze", "LeadSignal checks websites for technical, conversion, social, and tracking signals."],
+        ["Prioritize", "Each business gets a deterministic opportunity score so you can focus first."],
+        ["Contact", "Get a summary, recommended offer, reason to contact, and personalized openers."]
+      ],
+      whoTitle: "Who it is for",
+      whoSubtitle: "Designed for people selling practical marketing and web improvements to local businesses.",
+      audiences: [
+        ["Agencies", "Build prospect lists for SEO, ads, websites, and automation offers."],
+        ["Freelancers", "Find warmer leads without spending hours manually auditing websites."],
+        ["SEO consultants", "Spot businesses with missing metadata, schema, analytics, or weak calls to action."],
+        ["Web designers", "Pitch redesigns with specific, evidence-based website gaps."]
+      ],
+      pricingTitle: "Credits preview",
+      pricingSubtitle: "Simple usage-based architecture today, ready for paid plans later.",
+      pricingBullets: [
+        "Start with 25 free credits",
+        "1 analyzed lead costs 1 credit",
+        "CSV export included",
+        "Stripe-ready schema, payments not enabled yet"
+      ],
+      pricingNote: "Payments are intentionally not implemented in this MVP."
     },
     auth: {
       loginTitle: "Sign in",
@@ -75,7 +132,11 @@ export const dictionary = {
       recentSearches: "Recent searches",
       recentDescription: "Open a search to review scored leads and export CSV.",
       noSearches: "No searches yet.",
-      requested: "requested"
+      requested: "requested",
+      quickStartTitle: "Find your next outreach list",
+      quickStartBody: "Search a niche and city, let LeadSignal analyze the websites, then sort by opportunity score before exporting or contacting leads.",
+      quickStartCta: "Create a search",
+      quickStartNote: "Tip: start with 3 to 5 leads while testing a new niche."
     },
     search: {
       title: "New search",
@@ -176,18 +237,19 @@ export const dictionary = {
     },
     nav: {
       signIn: "Iniciar sesión",
-      startFree: "Empezar gratis",
+      startFree: "Empieza gratis con 25 créditos",
       dashboard: "Panel",
       newSearch: "Nueva búsqueda",
       settings: "Ajustes",
       signOut: "Cerrar sesión"
     },
     landing: {
-      badge: "Investigación de leads locales con créditos incluidos",
-      headline: "LeadSignal AI",
+      badge: "Creado para agencias, freelancers, consultores SEO y diseñadores web",
+      headline: "Convierte brechas de negocios locales en outreach calificado",
       subhead:
-        "Busca negocios locales, analiza sus brechas de marketing, puntúa la oportunidad y genera aperturas de contacto en un flujo enfocado.",
-      createAccount: "Crear cuenta",
+        "Encuentra negocios locales con brechas visibles de marketing, prioriza las mejores oportunidades y genera aperturas personalizadas antes que tu competencia.",
+      createAccount: "Empieza gratis con 25 créditos",
+      viewSampleLeads: "Ver leads de ejemplo",
       openDashboard: "Abrir panel",
       imageAlt: "Equipo revisando oportunidades de negocios locales",
       statScore: "Puntaje de oportunidad",
@@ -200,7 +262,60 @@ export const dictionary = {
         ["Búsqueda en Places", "Encuentra negocios por nicho, ciudad, país y cantidad."],
         ["Análisis de señales", "Detecta HTTPS, metadatos, formularios, redes, analítica, píxeles y schema."],
         ["Aperturas personalizadas", "Genera razones de contacto y primeras líneas concisas."]
-      ]
+      ],
+      sampleTitle: "Reporte de leads locales de ejemplo",
+      sampleSubtitle: "Mira el tipo de oportunidades que LeadSignal AI encuentra antes de crear una cuenta.",
+      sampleLeads: [
+        {
+          name: "Oak & Ivy Dental",
+          niche: "Dentista en Austin",
+          score: "86",
+          signals: "Sin schema, CTA débil, sin formulario",
+          offer: "Auditoría de conversión web",
+          opener: "Noté que la clínica tiene presencia local, pero el sitio hace más difícil de lo necesario pedir una cita."
+        },
+        {
+          name: "River City Med Spa",
+          niche: "Med spa en Tampa",
+          score: "78",
+          signals: "Falta meta description, sin Meta Pixel",
+          offer: "Landing page + retargeting",
+          opener: "Tus servicios se ven premium y vi algunos ajustes rápidos que podrían convertir más visitas en consultas."
+        },
+        {
+          name: "Summit Roof Repair",
+          niche: "Techadores en Denver",
+          score: "72",
+          signals: "Sin redirección HTTPS, sin analítica, pocas redes",
+          offer: "SEO local y limpieza de tracking",
+          opener: "Encontré la empresa revisando búsquedas de reparación de techos en Denver y vi brechas de tracking que pueden ocultar leads."
+        }
+      ],
+      howTitle: "Cómo funciona",
+      howSubtitle: "Un flujo simple para convertir datos de búsqueda local en outreach útil.",
+      steps: [
+        ["Search", "Ingresa nicho, ciudad, país, cantidad, oferta, idioma y tono."],
+        ["Analyze", "LeadSignal revisa señales técnicas, conversión, redes y tracking del sitio."],
+        ["Prioritize", "Cada negocio recibe un puntaje de oportunidad para decidir por dónde empezar."],
+        ["Contact", "Obtén resumen, oferta recomendada, razón para contactar y aperturas personalizadas."]
+      ],
+      whoTitle: "Para quién es",
+      whoSubtitle: "Diseñado para vender mejoras prácticas de marketing y web a negocios locales.",
+      audiences: [
+        ["Agencias", "Crea listas de prospectos para SEO, ads, sitios web y automatización."],
+        ["Freelancers", "Encuentra leads más cálidos sin pasar horas auditando sitios manualmente."],
+        ["Consultores SEO", "Detecta negocios con metadatos, schema, analítica o CTAs débiles."],
+        ["Diseñadores web", "Presenta rediseños con brechas específicas y basadas en evidencia."]
+      ],
+      pricingTitle: "Vista previa de créditos",
+      pricingSubtitle: "Arquitectura simple por uso hoy, lista para planes pagos luego.",
+      pricingBullets: [
+        "Empieza con 25 créditos gratis",
+        "1 lead analizado cuesta 1 crédito",
+        "Exportación CSV incluida",
+        "Schema listo para Stripe, pagos aún no habilitados"
+      ],
+      pricingNote: "Los pagos no están implementados intencionalmente en este MVP."
     },
     auth: {
       loginTitle: "Iniciar sesión",
@@ -225,7 +340,11 @@ export const dictionary = {
       recentSearches: "Búsquedas recientes",
       recentDescription: "Abre una búsqueda para revisar leads puntuados y exportar CSV.",
       noSearches: "Aún no hay búsquedas.",
-      requested: "solicitados"
+      requested: "solicitados",
+      quickStartTitle: "Encuentra tu próxima lista de outreach",
+      quickStartBody: "Busca un nicho y ciudad, deja que LeadSignal analice los sitios y ordena por puntaje de oportunidad antes de exportar o contactar leads.",
+      quickStartCta: "Crear búsqueda",
+      quickStartNote: "Tip: empieza con 3 a 5 leads mientras pruebas un nicho nuevo."
     },
     search: {
       title: "Nueva búsqueda",
