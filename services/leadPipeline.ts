@@ -1,8 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { SearchInput } from "@/lib/validation";
-import { analyzeWebsite, fetchWebsiteHtml } from "@/services/websiteAnalyzer";
-import { scoreOpportunity } from "@/services/scoring";
-import { fallbackLeadCopy, generateLeadCopy } from "@/services/openai";
+import { analyzeAndStoreLead } from "@/services/leadAnalysisEngine";
 import { searchPlaces } from "@/services/googlePlaces";
 import { spendCredit } from "@/services/credits";
 
@@ -41,44 +39,20 @@ export async function runSearchPipeline(params: {
 
       try {
         await spendCredit(supabase, userId, lead.id);
-        const html = await fetchWebsiteHtml(place.website);
-        const signals = analyzeWebsite(place.website, html);
-        const score = scoreOpportunity(signals, Boolean(place.website));
-
-        let copy;
-        try {
-          copy = await generateLeadCopy({
+        await analyzeAndStoreLead({
+          supabase,
+          userId,
+          leadId: lead.id,
+          input: {
             businessName: place.name,
-            address: place.address,
-            website: place.website,
-            signals,
-            score,
-            search: input
-          });
-        } catch {
-          copy = fallbackLeadCopy({
-            businessName: place.name,
-            website: place.website,
-            signals,
-            score,
-            search: input
-          });
-        }
-
-        await supabase
-          .from("leads")
-          .update({
-            status: "analyzed",
-            website_signals: signals,
-            opportunity_score: score,
-            ai_summary: copy.summary,
-            recommended_offer: copy.recommendedOffer,
-            reason_to_contact: copy.reasonToContact,
-            outreach_openers: copy.outreachOpeners,
-            analyzed_at: new Date().toISOString()
-          })
-          .eq("id", lead.id)
-          .eq("user_id", userId);
+            category: input.niche,
+            websiteUrl: place.website,
+            city: input.city,
+            country: input.country,
+            rating: place.rating ?? null,
+            reviewsCount: place.reviews ?? null
+          }
+        });
       } catch (leadError) {
         await supabase
           .from("leads")

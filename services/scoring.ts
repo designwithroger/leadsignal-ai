@@ -4,6 +4,7 @@ export function scoreOpportunity(signals: WebsiteSignals, hasWebsite: boolean) {
   let score = 35;
 
   if (!hasWebsite) score += 35;
+  if (hasWebsite && !signals.isReachable) score += 30;
   if (hasWebsite && !signals.hasHttps) score += 8;
   if (!signals.hasTitle) score += 8;
   if (!signals.hasMetaDescription) score += 8;
@@ -14,6 +15,7 @@ export function scoreOpportunity(signals: WebsiteSignals, hasWebsite: boolean) {
   if (!signals.hasGoogleAnalytics) score += 4;
   if (!signals.hasMetaPixel) score += 4;
   if (!signals.hasSchemaOrg) score += 3;
+  if (!signals.hasBookingLink) score += 3;
 
   return Math.max(0, Math.min(100, score));
 }

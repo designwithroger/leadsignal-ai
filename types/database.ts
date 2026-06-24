@@ -5,6 +5,10 @@ export type SearchStatus = "queued" | "running" | "completed" | "failed";
 export type LeadStatus = "new" | "analyzed" | "failed";
 
 export type WebsiteSignals = {
+  hasWebsite: boolean;
+  isReachable: boolean;
+  fetchStatus?: number;
+  fetchError?: string;
   hasHttps: boolean;
   hasTitle: boolean;
   title?: string;
@@ -19,6 +23,9 @@ export type WebsiteSignals = {
   hasGoogleAnalytics: boolean;
   hasMetaPixel: boolean;
   hasSchemaOrg: boolean;
+  hasJsonLd: boolean;
+  hasBookingLink: boolean;
+  bookingLinks: string[];
 };
 
 export type Lead = {

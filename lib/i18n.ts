@@ -223,7 +223,7 @@ export const dictionary = {
       websiteSignals: "Website signals",
       found: "Found",
       gap: "Gap",
-      signals: ["HTTPS", "Title tag", "Meta description", "H1", "Lead form", "WhatsApp link", "Social links", "Google Analytics", "Meta Pixel", "Schema.org"],
+      signals: ["HTTPS", "Title tag", "Meta description", "H1", "Lead form", "WhatsApp link", "Social links", "Google Analytics", "Meta Pixel", "Schema.org", "Booking links"],
       unknown: "Unknown"
     },
     settings: {
@@ -456,7 +456,7 @@ export const dictionary = {
       websiteSignals: "Señales del sitio web",
       found: "Encontrado",
       gap: "Brecha",
-      signals: ["HTTPS", "Etiqueta title", "Meta description", "H1", "Formulario", "Link de WhatsApp", "Redes sociales", "Google Analytics", "Meta Pixel", "Schema.org"],
+      signals: ["HTTPS", "Etiqueta title", "Meta description", "H1", "Formulario", "Link de WhatsApp", "Redes sociales", "Google Analytics", "Meta Pixel", "Schema.org", "Links de reserva"],
       unknown: "Desconocido"
     },
     settings: {

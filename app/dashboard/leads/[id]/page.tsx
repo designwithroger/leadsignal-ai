@@ -18,6 +18,7 @@ export default async function LeadDetailPage({ params }: { params: Promise<{ id:
   if (!data) return <div className="rounded-lg border bg-card p-8">{copy.lead.notFound}</div>;
   const lead = data as Lead;
   const signals = lead.website_signals as WebsiteSignals;
+  const socialLinks = signals.socialLinks ?? [];
 
   return (
     <div className="space-y-6">
@@ -93,10 +94,11 @@ export default async function LeadDetailPage({ params }: { params: Promise<{ id:
               <Signal label={copy.lead.signals[3]} active={signals.hasH1} copy={copy.lead} />
               <Signal label={copy.lead.signals[4]} active={signals.hasForm} copy={copy.lead} />
               <Signal label={copy.lead.signals[5]} active={signals.hasWhatsApp} copy={copy.lead} />
-              <Signal label={copy.lead.signals[6]} active={signals.socialLinks.length > 0} copy={copy.lead} />
+              <Signal label={copy.lead.signals[6]} active={socialLinks.length > 0} copy={copy.lead} />
               <Signal label={copy.lead.signals[7]} active={signals.hasGoogleAnalytics} copy={copy.lead} />
               <Signal label={copy.lead.signals[8]} active={signals.hasMetaPixel} copy={copy.lead} />
               <Signal label={copy.lead.signals[9]} active={signals.hasSchemaOrg} copy={copy.lead} />
+              <Signal label={copy.lead.signals[10]} active={Boolean(signals.hasBookingLink)} copy={copy.lead} />
             </CardContent>
           </Card>
         </div>
